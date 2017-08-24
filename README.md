@@ -10,7 +10,7 @@ const logger = require(`logger`).global(loggerID)
 ```
 
 This will create a logger instance with the given ID and override the `console` methods.
-Subsequent calls to `require(`logger`).global` must be given the same loggerID, and they will
+Subsequent calls to `require('logger').global` must be given the same loggerID, and they will
 all return the same instance of the logger.
 
 Create multiple loggers:
