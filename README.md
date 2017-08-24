@@ -6,11 +6,11 @@ When running in Google Cloud, timestamps are remove and json format is used
 ## Usage
 Create a global logger:
 ```
-const logger = require(`logger`).global(loggerID)
+const logger = require(`logger`)(loggerID)
 ```
 
 This will create a logger instance with the given ID and override the `console` methods.
-Subsequent calls to `require('logger').global` must be given the same loggerID, and they will
+Subsequent calls to `require('logger')()` must be given the same loggerID, and they will
 all return the same instance of the logger.
 
 Create multiple loggers:
