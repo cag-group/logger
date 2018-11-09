@@ -1,25 +1,43 @@
-# Logger for Node.js apps in GKE
+## Node.js library for Google Cloud Logging
 
-Logs with formatted timestamps when logging on standard out when running locally.
-When running in Google Cloud, timestamps are remove and json format is used
+Output logs on standard output when running locally and to Stackdriver logging when deployed in GCP.
 
-## Usage
-Create a global logger:
+Supports settings log levels in runtime.
+
+When deployed in cloud, logs appear in GCP console below "Global". Labels could be added in order to further
+support log filtering.
+
+HTTP requests are logged with debug. The following requests muted by default: /, /health, /version, /kpis.
+Other URLs can be added by calling `addIgnoredPaths`.
+
+The default log level is `info`.
+
+Calls to `console.log` are redirected to the logger.
+
+### Usage
+
 ```
-const logger = require(`logger`)(loggerID)
+const logger = require('@cag-group/logger')
+
+// Initialize logging before using it. Logs appears in the
+logger.init(`${config.appName}-${config.envName}`)
+
+// Set labels
+logger.addLabel('appName', config.appName)
+logger.addLabel('envName', config.envName)
+logger.addLabel('version', process.env.VERSION)
+
+logger.addIgnoredPath('/noisyendpoint')
+
+logger.setLogLevel('debug')
+
+logger.error('logger error')
+logger.warn('logger warn')
+logger.info('logger info, %d', 42)
+logger.info('The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog')
+logger.debug('logger debug')
+logger.debug('The Answer is %s, really.', 42)
+logger.debug({foo: 'Text', bar: 42})        // Display in stackdriver logging: "{foo: 'Text', bar: 42}"
+logger.debug({message: 'Text', value: 42})  // Display in stackdriver logging: "Text"
+console.log('Console.log is', 'working' ' and outputs to the same destination')
 ```
-
-This will create a logger instance with the given ID and override the `console` methods.
-Subsequent calls to `require('logger')()` must be given the same loggerID, and they will
-all return the same instance of the logger.
-
-Create multiple loggers:
-```
-const logger1 = require(`logger`).local(id1)
-const logger2 = require(`logger`).local(id2)
-```
-
-This will create two unique instances of the logger, the `console` methods will not be overwritten.
-
-If you use `local` in multiple places with the same loggerID, the universe fabric of the universe
-will be torn apart... Or at least I think that will happen, I don't really know.

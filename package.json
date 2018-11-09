@@ -1,30 +1,20 @@
 {
-  "name": "logger",
-  "version": "0.0.2",
-  "description": "Enhanced node logging",
+  "name": "@cag-group/stackdriver-logger",
+  "version": "1.0.0",
+  "description": "Logger for Node.js apps using Stackdriver Logging in Google Cloud",
   "main": "lib/logger.js",
   "scripts": {
-    "test": "echo \"Ain't got no tests yet\"; exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cag-group/logger.git"
+    "url": "git+https://github.com/cag-group/stackdriver-logger.git"
   },
-  "keywords": [
-    "npm",
-    "logger",
-    "logging"
-  ],
-  "author": "C.A.G Edge",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cag-group/logger/issues"
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
   },
-  "homepage": "https://github.com/cag-group/logger#readme",
   "dependencies": {
-    "moment": "^2.18.1",
-    "winston": "^2.3.1",
-    "@google-cloud/logging": "^1.0.0",
-    "@google-cloud/logging-winston": "^0.4.1"
+    "@google-cloud/logging": "^4.0.1"
   }
 }
